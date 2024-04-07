@@ -100,7 +100,9 @@ namespace ISM6225_Spring_2024_Assignment_2
             try
             {
                 // Write your code here and you can modify the return value according to the requirements
-                return 0;
+                int[] ints = nums.Distinct().ToArray();
+                //Count the number of unique elements
+                return ints.Length;
             }
             catch (Exception)
             {
@@ -134,8 +136,31 @@ namespace ISM6225_Spring_2024_Assignment_2
         {
             try
             {
-                // Write your code here and you can modify the return value according to the requirements
-                return new List<int>();
+                // Create a list to hold the non-zero elements from nums2
+                List<int> nonZeroElements = new List<int>();
+                // Create a variable to hold the number of zeroes
+                int zeroCount = 0;
+                // Iterate through the elements
+                for (int i = 0; i < nums.Length; i++)
+                {
+                    // If the current element is not zero, add it to nonZeroElements
+                    if (nums[i] != 0)
+                    {
+                        nonZeroElements.Add(nums[i]);
+                    }
+                    // If the current element is zero, increment zeroCount
+                    else
+                    {
+                        zeroCount++;
+                    }
+                }
+                // Add the zeroes to nonZeroElements
+                for (int i = 0; i < zeroCount; i++)
+                {
+                    nonZeroElements.Add(0);
+                }
+                // Return nonZeroElements
+                return nonZeroElements;
             }
             catch (Exception)
             {
@@ -185,8 +210,63 @@ namespace ISM6225_Spring_2024_Assignment_2
         {
             try
             {
-                // Write your code here and you can modify the return value according to the requirements
-                return new List<IList<int>>();
+                // Create a list to hold the triplets
+                List<IList<int>> triplets = new List<IList<int>>();
+                // Sort the elements in nums
+                Array.Sort(nums);
+                // Iterate through the elements
+                for (int i = 0; i < nums.Length - 2; i++)
+                {
+                    // If the current element is greater than zero, break
+                    if (nums[i] > 0)
+                    {
+                        break;
+                    }
+                    // If the current element is the same as the previous element, continue
+                    if (i > 0 && nums[i] == nums[i - 1])
+                    {
+                        continue;
+                    }
+                    // Create variables to hold the left and right pointers
+                    int left = i + 1;
+                    int right = nums.Length - 1;
+                    // Iterate through the elements
+                    while (left < right)
+                    {
+                        // Create a variable to hold the sum of the elements
+                        int sum = nums[i] + nums[left] + nums[right];
+                        // If the sum is zero, add the elements to triplets
+                        if (sum == 0)
+                        {
+                            triplets.Add(new List<int> { nums[i], nums[left], nums[right] });
+                            // Increment left and decrement right
+                            left++;
+                            right--;
+                            // If the left element is the same as the previous element, continue
+                            while (left < right && nums[left] == nums[left - 1])
+                            {
+                                left++;
+                            }
+                            // If the right element is the same as the previous element, continue
+                            while (left < right && nums[right] == nums[right + 1])
+                            {
+                                right--;
+                            }
+                        }
+                        // If the sum is less than zero, increment left
+                        else if (sum < 0)
+                        {
+                            left++;
+                        }
+                        // If the sum is greater than zero, decrement right
+                        else
+                        {
+                            right--;
+                        }
+                    }
+                }
+                // Return triplets
+                return triplets;
             }
             catch (Exception)
             {
@@ -220,8 +300,22 @@ namespace ISM6225_Spring_2024_Assignment_2
         {
             try
             {
-                // Write your code here and you can modify the return value according to the requirements
-                return 0;
+                // Find the maximum number of consecutive ones
+                int max = 0;
+                int count = 0;
+                for (int i = 0; i < nums.Length; i++)
+                {
+                    if (nums[i] == 1)
+                    {
+                        count++;
+                        max = Math.Max(max, count);
+                    }
+                    else
+                    {
+                        count = 0;
+                    }
+                }
+                return max;
             }
             catch (Exception)
             {
@@ -257,7 +351,17 @@ namespace ISM6225_Spring_2024_Assignment_2
             try
             {
                 // Write your code here and you can modify the return value according to the requirements
-                return 0;
+                // Convert the binary number to a decimal number
+                int decimalNumber = 0;
+                int baseValue = 1;
+                while (binary > 0)
+                {
+                    int remainder = binary % 10;
+                    decimalNumber = decimalNumber + remainder * baseValue;
+                    baseValue = baseValue * 2;
+                    binary = binary / 10;
+                }
+                return decimalNumber;
             }
             catch (Exception)
             {
@@ -295,7 +399,17 @@ namespace ISM6225_Spring_2024_Assignment_2
             try
             {
                 // Write your code here and you can modify the return value according to the requirements
-                return 0;
+                if (nums.Length < 2)
+                {
+                    return 0;
+                }
+                Array.Sort(nums);
+                int maxGap = 0;
+                for (int i = 0; i < nums.Length - 1; i++)
+                {
+                    maxGap = Math.Max(maxGap, nums[i + 1] - nums[i]);
+                }
+                return maxGap;
             }
             catch (Exception)
             {
@@ -335,6 +449,15 @@ namespace ISM6225_Spring_2024_Assignment_2
             try
             {
                 // Write your code here and you can modify the return value according to the requirements
+                // Find the largest perimeter of a triangle
+                Array.Sort(nums);
+                for (int i = nums.Length - 1; i >= 2; i--)
+                {
+                    if (nums[i - 2] + nums[i - 1] > nums[i])
+                    {
+                        return nums[i - 2] + nums[i - 1] + nums[i];
+                    }
+                }
                 return 0;
             }
             catch (Exception)
@@ -389,7 +512,12 @@ namespace ISM6225_Spring_2024_Assignment_2
             try
             {
                 // Write your code here and you can modify the return value according to the requirements
-                return "";
+                // Remove all occurrences of part from s
+                while (s.Contains(part))
+                {
+                    s = s.Remove(s.IndexOf(part), part.Length);
+                }
+                return s;
             }
             catch (Exception)
             {
