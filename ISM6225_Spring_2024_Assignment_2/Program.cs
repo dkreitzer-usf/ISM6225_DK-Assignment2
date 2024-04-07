@@ -300,22 +300,29 @@ namespace ISM6225_Spring_2024_Assignment_2
         {
             try
             {
-                // Find the maximum number of consecutive ones
-                int max = 0;
-                int count = 0;
-                for (int i = 0; i < nums.Length; i++)
+            // Initialize max to track the maximum number of consecutive 1s found
+            int max = 0;
+            // Initialize count to track the current number of consecutive 1s
+            int count = 0;
+
+            // Loop through each element in the array nums
+             (int i = 0; i < nums.Length; i++)
+            {
+                // Check if the current element is 1
+                if (nums[i] == 1)
                 {
-                    if (nums[i] == 1)
-                    {
-                        count++;
-                        max = Math.Max(max, count);
-                    }
-                    else
-                    {
-                        count = 0;
-                    }
+                    count++;  // Increment the count of consecutive 1s
+                    max = Math.Max(max, count);  // Update max if the current count is greater
                 }
-                return max;
+                else
+                {
+                    count = 0;  // Reset count to 0 if the current element is not 1
+                }
+            }
+
+            // Return the maximum number of consecutive 1s found in the array
+            return max;
+
             }
             catch (Exception)
             {
@@ -351,16 +358,19 @@ namespace ISM6225_Spring_2024_Assignment_2
             try
             {
                 // Write your code here and you can modify the return value according to the requirements
-                // Convert the binary number to a decimal number
-                int decimalNumber = 0;
-                int baseValue = 1;
+                int decimalNumber = 0;  // Initialize decimalNumber to store the result of the conversion
+                int baseValue = 1;      // Start with the least significant digit, corresponding to 2^0
+
+                // Continue the loop as long as there are digits left in the binary number
                 while (binary > 0)
                 {
-                    int remainder = binary % 10;
-                    decimalNumber = decimalNumber + remainder * baseValue;
-                    baseValue = baseValue * 2;
-                    binary = binary / 10;
+                    int remainder = binary % 10;  // Extract the last digit of the binary number
+                    decimalNumber = decimalNumber + remainder * baseValue;  // Add the weighted digit to the decimal result
+                    baseValue = baseValue * 2;  // Prepare the next base value, corresponding to the next power of 2
+                    binary = binary / 10;  // Remove the last digit from the binary number
                 }
+
+                // Return the converted decimal number
                 return decimalNumber;
             }
             catch (Exception)
@@ -399,16 +409,25 @@ namespace ISM6225_Spring_2024_Assignment_2
             try
             {
                 // Write your code here and you can modify the return value according to the requirements
+                // Check if the array has fewer than two elements, as at least two are needed to find a gap
                 if (nums.Length < 2)
                 {
-                    return 0;
+                    return 0;  // Return 0 since no gap can exist with fewer than two numbers
                 }
+
+                // Sort the array to ensure the elements are in ascending order
                 Array.Sort(nums);
-                int maxGap = 0;
+
+                int maxGap = 0;  // Initialize the maximum gap variable to store the largest difference found
+
+                // Iterate through the array to find the maximum difference between successive elements
                 for (int i = 0; i < nums.Length - 1; i++)
                 {
+                    // Update maxGap if the current gap (difference between consecutive elements) is larger
                     maxGap = Math.Max(maxGap, nums[i + 1] - nums[i]);
                 }
+
+                // Return the largest gap found between any two successive elements
                 return maxGap;
             }
             catch (Exception)
@@ -449,15 +468,20 @@ namespace ISM6225_Spring_2024_Assignment_2
             try
             {
                 // Write your code here and you can modify the return value according to the requirements
-                // Find the largest perimeter of a triangle
+                // Sort the array to arrange the side lengths in ascending order
                 Array.Sort(nums);
-                for (int i = nums.Length - 1; i >= 2; i--)
-                {
-                    if (nums[i - 2] + nums[i - 1] > nums[i])
-                    {
+
+                // Start from the largest potential triangle sides and check backwards
+                for (int i = nums.Length - 1; i >= 2; i--) {
+                    // Check if the three sides at indices i-2, i-1, and i can form a triangle
+                    // According to the triangle inequality theorem, the sum of any two sides must be greater than the third side
+                    if (nums[i - 2] + nums[i - 1] > nums[i]) {
+                        // If they can form a triangle, return the sum of these sides as the maximum perimeter
                         return nums[i - 2] + nums[i - 1] + nums[i];
                     }
                 }
+
+                // If no valid triangle is found, return 0
                 return 0;
             }
             catch (Exception)
@@ -512,12 +536,17 @@ namespace ISM6225_Spring_2024_Assignment_2
             try
             {
                 // Write your code here and you can modify the return value according to the requirements
-                // Remove all occurrences of part from s
+                // Loop to remove all occurrences of the substring 'part' from the string 's'
                 while (s.Contains(part))
                 {
-                    s = s.Remove(s.IndexOf(part), part.Length);
+                    // Check if the string 's' contains the substring 'part'
+                    int startIndex = s.IndexOf(part);  // Find the first index where 'part' occurs
+                    s = s.Remove(startIndex, part.Length);  // Remove the substring 'part' from 's' starting at 'startIndex'
                 }
+
+                // Return the modified string after all occurrences of 'part' have been removed
                 return s;
+
             }
             catch (Exception)
             {
